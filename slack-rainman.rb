@@ -1,5 +1,4 @@
-require "/Users/micahboyd/fmsystems/rainman"
 require 'slack-ruby-bot'
-require 'commands/calculate'
-require 'bot'
+require 'slack-rainman/commands/calculate'
+require 'slack-rainman/bot'
 require "pry"
