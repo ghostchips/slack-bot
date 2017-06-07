@@ -9,23 +9,35 @@ describe SlackRainman::Commands::Calculate do
   subject { app }
 
   it 'returns 1 1' do
-    expect(message: "#{SlackRubyBot.config.user} write 1 1", channel: 'channel').to respond_with_slack_message('1')
+    expect(message: "#{SlackRubyBot.config.user} write out 1", channel: 'channel').to respond_with_slack_message('one')
   end
 
   it 'returns 1 1' do
-    expect(message: "#{SlackRubyBot.config.user} write 101", channel: 'channel').to respond_with_slack_message('100')
+    expect(message: "#{SlackRubyBot.config.user} write out 0", channel: 'channel').to respond_with_slack_message('zero')
   end
 
-  it 'returns 1000' do
-    expect(message: "#{SlackRubyBot.config.user} write 4,320", channel: 'channel').to respond_with_slack_message('1211')
+  it 'returns number written out in words' do
+    expect(message: "#{SlackRubyBot.config.user} write out 324", channel: 'channel').to respond_with_slack_message('three-hundred-and-twenty-four')
   end
 
-  LOOKUP_1 = [
-    %w(. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen),
-    %w(. . twenty thrity fourty fifty sixty seventy eighty ninety),
-  ]
+  it 'returns number written out in words' do
+    expect(message: "#{SlackRubyBot.config.user} write out 3,024", channel: 'channel').to respond_with_slack_message('three-thousand and-twenty-four')
+  end
 
-  LOOKUP_2 =
-    %w(hundred thousand million billion trillion quadrillion quintillion sextillion septillion octillion nonillion decillion undecillion duodecillion tredecillion quattuordecillion quindecillion sexdecillion septendecillion octodecillion novemdecillion vigintillion centillion)
+  it 'returns number written out in words' do
+    expect(message: "#{SlackRubyBot.config.user} write out 30,024", channel: 'channel').to respond_with_slack_message('thirty-thousand and-twenty-four')
+  end
+
+  it 'returns number written out in words' do
+    expect(message: "#{SlackRubyBot.config.user} write out 310,624", channel: 'channel').to respond_with_slack_message('three-hundred-and-ten-thousand six-hundred-and-twenty-four')
+  end
+
+  it 'returns number written out in words' do
+    expect(message: "#{SlackRubyBot.config.user} write out 2,517,604", channel: 'channel').to respond_with_slack_message('two-million five-hundred-and-seventeen-thousand six-hundred-and-four')
+  end
+
+  it 'returns number written out in words' do
+    expect(message: "#{SlackRubyBot.config.user} write out 1,000,000,000", channel: 'channel').to respond_with_slack_message('one-billion')
+  end
 
 end
